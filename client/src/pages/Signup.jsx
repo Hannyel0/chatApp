@@ -1,7 +1,11 @@
-import React from 'react'
+import Navbar from "../components/Navbar"
+
 
 export default function Signup() {
   return (
-    <div>Signup</div>
+    <>
+    <Navbar/>
+    <h1>Sign Up</h1>
+    </>
   )
 }
