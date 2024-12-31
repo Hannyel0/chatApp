@@ -69,3 +69,23 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.form_wrapper{
+  display: flex;
+  justify-content: center;
+  
+}
+
+.form_wrapper form{
+  display: flex;
+  flex-direction: column;
+  min-width: 15%;
+}
+
+.form_wrapper form input{
+  padding: .8rem;
+  margin: 1rem;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+}
+
