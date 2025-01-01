@@ -8,12 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        "primary-a0": "#f012e6",
-        "primary-a10": "#f448e9",
-        "primary-a20": "#f867ec",
-        "primary-a30": "#fb81ef",
-        "primary-a40": "#fe98f2",
-        "primary-a50": "#ffaef5",
+        "primary-a0": "#535a9f",
+        "primary-a10": "#676baa",
+        "primary-a20": "#7a7cb4",
+        "primary-a30": "#8d8dbf",
+        "primary-a40": "#9f9fc9",
+        "primary-a50": "#b2b2d4",
         "surface-a0": "#121212",
         "surface-a10": "#282828",
         "surface-a20": "#3f3f3f",

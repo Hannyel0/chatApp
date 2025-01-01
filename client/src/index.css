@@ -21,9 +21,4 @@
 
 }
 
-.input-style{
-  @apply p-2.5 text-white placeholder:text-surface-a50 rounded-lg outline-none mb-7 bg-surface-a20
-}
-
-
 

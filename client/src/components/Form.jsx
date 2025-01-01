@@ -42,7 +42,7 @@ export default function Form({ type, sendDataToParent }) {
             {type === "signUp" && (
                 <Input type="password" name="confirmPassword" onChange={handleChange}/>
             )}
-            <button className=' rounded-lg bg-primary-a30 hover:bg-accent-dark py-3 px-6 font-extrabold mt-1' type='submit'> {type === "signUp" ? "Sign Up" : "Log In"}</button>
+            <button className=' rounded-lg bg-primary-a30 hover:bg-primary-a20 py-3 px-6 font-extrabold mt-1' type='submit'> {type === "signUp" ? "Sign Up" : "Log In"}</button>
         </form>
     </div>
   )
@@ -53,7 +53,7 @@ export default function Form({ type, sendDataToParent }) {
 function Input({type, name, onChange}){
 
     return(
-        <input className='input-style' type={type} name={name} placeholder={name} onChange={onChange}/>
+        <input className='p-2.5 text-white placeholder:text-surface-a50 rounded-lg outline-none mb-7 bg-surface-a20' type={type} name={name} placeholder={name} onChange={onChange}/>
     )
 }
 
