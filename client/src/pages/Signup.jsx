@@ -13,7 +13,7 @@ export default function Signup() {
   return (
     <>
     <Navbar/>
-    <h1 style={{textAlign: "center"}}>Sign Up</h1>
+
     <Form type="signUp" sendDataToParent={handleFormData}/>
     </>
   )

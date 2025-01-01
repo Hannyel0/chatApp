@@ -31,18 +31,29 @@ export default function Form({ type, sendDataToParent }) {
 
   return (
 
-    <div className="form_wrapper">
-        <form onSubmit={handleSubmit}>
+    <div className="h-[60vh] flex items-center justify-center flex-col">
+        <h1 className="font-bold text-4xl mb-7">{type === "login" ? "Login" : "Sign Up"}</h1>
+        <form className=' rounded-xl p-9 bg-surface-a10 flex flex-col items-center justify-center' onSubmit={handleSubmit}>
             {type === "signUp" && (
-                <input type="text" name='username' placeholder='username' onChange={handleChange}/>
+                <Input type="text" name="username" onChange={handleChange}/>
             )}
-            <input type='email' name='email' placeholder='email' onChange={handleChange}/>
-            <input type="password" name='password' placeholder='password' onChange={handleChange}/>
+            <Input type="email" name="email" onChange={handleChange}/>
+            <Input type="password" name="password" onChange={handleChange}/>
             {type === "signUp" && (
-                <input type="password" name='confirmPassword' placeholder='repeat password' onChange={handleChange} />
+                <Input type="password" name="confirmPassword" onChange={handleChange}/>
             )}
-            <button type='submit'> {type === "signUp" ? "Sign Up" : "Log In"}</button>
+            <button className=' rounded-lg bg-primary-a30 hover:bg-accent-dark py-3 px-6 font-extrabold mt-1' type='submit'> {type === "signUp" ? "Sign Up" : "Log In"}</button>
         </form>
     </div>
   )
+
+
 }
+
+function Input({type, name, onChange}){
+
+    return(
+        <input className='input-style' type={type} name={name} placeholder={name} onChange={onChange}/>
+    )
+}
+

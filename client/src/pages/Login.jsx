@@ -14,7 +14,6 @@ export default function Login() {
   return (
     <>
     <Navbar/>
-    <h1 style={{textAlign: "center"}}>Login</h1>
     <Form type="login" sendDataToParent={handleFormData}/>
     </>
   )
