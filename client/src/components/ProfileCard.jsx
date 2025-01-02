@@ -1,5 +1,5 @@
-import React from 'react'
-import NoProfile from '../assets/3da39-no-user-image-icon-27.png'
+import { Link } from 'react-router-dom'
+import NoProfile from '../assets/no-user-profile.png'
 
 export default function ProfileCard() {
 
@@ -19,7 +19,7 @@ export default function ProfileCard() {
             </div>
             
         </div>
-        <button className='rounded-lg bg-primary-a30 hover:bg-primary-a20 py-1 px-4 font-bold mt-4 ml-1'>Chat</button>
+        <button className='rounded-lg bg-primary-a30 hover:bg-primary-a20 py-1 px-4 font-bold mt-4 ml-1'><Link to="/chat">Chat</Link></button>
     </section>
 
   )

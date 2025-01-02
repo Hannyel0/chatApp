@@ -1,6 +1,8 @@
 # Node modules directory
 node_modules/
-
+.env
+.env.local
+.env.*.local
 # Logs
 logs/
 *.log
@@ -20,9 +22,7 @@ build/
 Thumbs.db
 
 # Environment files
-.env
-.env.local
-.env.*.local
+
 
 # IDEs and editors
 .vscode/

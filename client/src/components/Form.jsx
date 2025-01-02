@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
-export default function Form({ type, sendDataToParent }) {
+export default function Form({ type }) {
+
+
+    const navigate = useNavigate()
+
+    const [error, setError] = useState(null)
 
 
     const [formData, setFormData] = useState({
@@ -18,13 +25,41 @@ export default function Form({ type, sendDataToParent }) {
             ...pre,
             [name]: value
         }));
+
+        setError('')
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
 
         e.preventDefault()
 
-        sendDataToParent(formData)
+        try{
+
+            const url = type === "login" ? "http://192.168.1.172:3939/login" : "http://192.168.1.172:3939/signup"
+
+            const response = await axios.post(url, formData, {
+                withCredentials: true
+            })
+
+            console.log(response)
+
+            if(type=== "login"){
+                navigate('/profile')
+            }
+
+            if(type=== "signUp"){
+                navigate('/login')
+            }
+
+        }catch(err){
+            console.log("Error: ", err.response.data.message, err.response.data.error)
+
+            setError(err.response.data.message)
+        }
+
+
+
+
 
     }
 
@@ -41,6 +76,9 @@ export default function Form({ type, sendDataToParent }) {
             <Input type="password" name="password" onChange={handleChange}/>
             {type === "signUp" && (
                 <Input type="password" name="confirmPassword" onChange={handleChange}/>
+            )}
+            {error && (
+                <div className={` p-2.5 text-white mb-4 bg-red-500 rounded-lg transform ${error ? `scale-100 opacity-100`: `scale-0 opacity-0` } break-words max-w-md transition-all duration-400 ease-in-out `}>{error}</div>
             )}
             <button className=' rounded-lg bg-primary-a30 hover:bg-primary-a20 py-3 px-6 font-extrabold mt-1' type='submit'> {type === "signUp" ? "Sign Up" : "Log In"}</button>
         </form>
