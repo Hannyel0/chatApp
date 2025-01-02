@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import NoProfile from '../assets/no-user-profile.png'
 
-export default function ProfileCard() {
+export default function ProfileCard({userData}) {
 
 
 
@@ -14,8 +14,8 @@ export default function ProfileCard() {
                 <img src={NoProfile} alt="user" className='max-w-full h-auto rounded-full border border-surface-a30 shadow-sm hover:scale-110 transition-all trant' />
             </div>
             <div>
-                <h3 className='text-xl font-bold'>Jhon Doe</h3>
-                <p className='text-sm font-light'>jhonDoe@gmail.com</p>
+                <h3 className='text-xl font-bold'>{userData.name}</h3>
+                <p className='text-sm font-light'>{userData.email}</p>
             </div>
             
         </div>

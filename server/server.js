@@ -96,6 +96,7 @@ app.post('/login', async(req, res)=>{
         res.cookie("authToken", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
             maxAge: 3600000
         })
 
@@ -111,12 +112,22 @@ app.post('/login', async(req, res)=>{
 
 
 
+app.get("/profile", authenticate, async(req, res)=>{
 
+    const user = await User.findById(req.user.userId)
 
+    if(!user){
+        return res.status(404).json({message: "User Not found"})
+    }
 
-app.get('/profile', async(req, res)=>{
-
+    res.status(200).json({user})
 })
+
+
+
+
+
+
 
 
 

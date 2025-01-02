@@ -35,7 +35,7 @@ export default function Form({ type }) {
 
         try{
 
-            const url = type === "login" ? "http://192.168.1.172:3939/login" : "http://192.168.1.172:3939/signup"
+            const url = type === "login" ? "http://localhost:3939/login" : "http://localhost:3939/signup"
 
             const response = await axios.post(url, formData, {
                 withCredentials: true
