@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 
 export async function connectMongo(){
 
-    const urlURI = "mongodb://localhost:27017/users"
+    const urlURI = "mongodb://localhost:27017/chatApp"
 
     try{
 

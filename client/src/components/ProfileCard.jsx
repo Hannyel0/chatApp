@@ -3,6 +3,10 @@ import NoProfile from '../assets/no-user-profile.png'
 
 export default function ProfileCard({userData}) {
 
+  if (!userData) {
+    return <div>Loading user data...</div>;
+}
+
 
 
 
@@ -19,7 +23,7 @@ export default function ProfileCard({userData}) {
             </div>
             
         </div>
-        <button className='rounded-lg bg-primary-a30 hover:bg-primary-a20 py-1 px-4 font-bold mt-4 ml-1'><Link to="/chat">Chat</Link></button>
+        <button className='rounded-lg bg-primary-a30 hover:bg-primary-a20 py-1 px-4 font-bold mt-4 ml-1'><Link className='h-full' to="/chat">Chat</Link></button>
     </section>
 
   )

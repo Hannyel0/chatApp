@@ -67,8 +67,6 @@ app.post('/signup', async(req, res)=>{
 })
 
 
-//test
-
 
 
 
@@ -112,7 +110,7 @@ app.post('/login', async(req, res)=>{
 
 
 
-app.get("/profile", authenticate, async(req, res)=>{
+app.get("/auth", authenticate, async(req, res)=>{
 
     const user = await User.findById(req.user.userId)
 
