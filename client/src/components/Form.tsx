@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState} from 'react'
 import axios, { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -19,7 +19,6 @@ interface InputProps{
     name: 'username' | 'email' | 'password' | 'confirmPassword';
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
-
 
 
 export default function Form({ type }: FormProps) {

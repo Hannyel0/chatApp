@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import NoProfile from '../assets/no-user-profile.png'
+import { useUser } from "../context/UserContext"
 
 export default function ProfileCard({userData}) {
+  
 
 
 
