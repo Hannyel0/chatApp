@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+
+
 
 export default function ProtectedRoute({children}) {
 
     const [isAuthenticated, setIsAuthenticated] = useState(null);
-    const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
@@ -17,13 +18,12 @@ export default function ProtectedRoute({children}) {
 
             try{
                 
-                const response = await axios.get("http://localhost:3939/auth", {
+                await axios.get("http://localhost:3939/auth", {
                     withCredentials: true,
                 })
     
     
                 setIsAuthenticated(true)
-                setUser(response.data.user)
             }catch(err){
                 setIsAuthenticated(false)
                 console.log("error authenticating and fetching the User", err)
@@ -55,6 +55,7 @@ export default function ProtectedRoute({children}) {
     }
     
 
-    return React.cloneElement(children, { user });
+    return children
+    
 
 }

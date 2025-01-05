@@ -62,9 +62,9 @@ Make sure you have the following installed:
     cd server
     npm start
    ```
-2. Start the frontend development server:
+2. Start the frontend server:
 
     ```bash
     cd client
-    npm run dev
+    npm start
    ```
