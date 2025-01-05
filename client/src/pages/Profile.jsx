@@ -6,8 +6,11 @@ export default function Profile({user}) {
 
   return (
 
+   
+
     <>
     <Navbar/>
+
 
     <main className="flex justify-center items-center m-7">
 

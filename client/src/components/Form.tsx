@@ -1,24 +1,43 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
+import axios, { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 
-export default function Form({ type }) {
+interface FormProps{
+    type: "login" | "signUp"
+}
+
+interface FormData {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
+
+interface InputProps{
+    type: string;
+    name: 'username' | 'email' | 'password' | 'confirmPassword';
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+
+
+export default function Form({ type }: FormProps) {
 
 
     const navigate = useNavigate()
 
-    const [error, setError] = useState(null)
+    const [error, setError] = useState<string | null>(null)
 
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         username: '',
         email: '',
         password: '',
         confirmPassword: ''
     })
 
-    const handleChange = (e) =>{
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) =>{
         const {name, value} = e.target
 
         setFormData((pre)=>({
@@ -26,10 +45,10 @@ export default function Form({ type }) {
             [name]: value
         }));
 
-        setError('')
+        setError("")
     }
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) =>{
 
         e.preventDefault()
 
@@ -37,29 +56,32 @@ export default function Form({ type }) {
 
             const url = type === "login" ? "http://localhost:3939/login" : "http://localhost:3939/signup"
 
-            const response = await axios.post(url, formData, {
+            await axios.post(url, formData, {
                 withCredentials: true
             })
 
-            console.log(response)
 
             if(type=== "login"){
                 navigate('/profile')
             }
 
-            if(type=== "signUp"){
+            if(type === "signUp"){
                 navigate('/login')
             }
 
-        }catch(err){
-            console.log("Error: ", err.response.data.message, err.response.data.error)
+        }catch(err: any){
 
-            setError(err.response.data.message)
+            if(axios.isAxiosError(err) && err.message){
+
+                console.log("Error: ", err.response?.data.message, err.response?.data.err)
+                setError(err.response?.data.message || "An error ocurred")
+
+            }else{
+
+                console.log("Unexpected Error: ", err)
+                setError("An undexpected error ocurred")
+            }
         }
-
-
-
-
 
     }
 
@@ -88,7 +110,7 @@ export default function Form({ type }) {
 
 }
 
-function Input({type, name, onChange}){
+function Input({type, name, onChange}: InputProps){
 
     return(
         <input className='p-2.5 text-white placeholder:text-surface-a50 rounded-lg outline-none mb-7 bg-surface-a20' type={type} name={name} placeholder={name} onChange={onChange}/>
