@@ -8,10 +8,16 @@ const Login: React.FC = () => {
   
 
   return (
+
     <>
     <Navbar/>
-    <Form type="login" />
+
+    <section className="h-[calc(100vh-68px)] bg-[url(/home/dex/projects/nodejsP/chatApp/client/src/assets/bg-forms.svg)] bg-no-repeat bg-cover">
+    
+      <Form type="login" />
+    </section>
     </>
+    
   )
   
 }
