@@ -40,13 +40,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
     
 
-    const allowedPaths = ["/profile", "/chat"]
 
     useEffect(()=>{
 
+        const UnallowedPaths = ["/login", "/signup"]
+
         const checkAuth = async ()=>{
 
-            if(allowedPaths.includes(location.pathname)){
+            if(UnallowedPaths.includes(location.pathname)){
+                return
+                
+            }else{
 
                 try{
 
@@ -66,6 +70,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
         }
         checkAuth()
+
     }, [location.pathname])
 
     const logOut = async () =>{
@@ -79,7 +84,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
         navigate("/")
 
         }catch(err: any){
-            console.log("could not log out", err)
+            console.log("could not log out",)
         }
         
     }
