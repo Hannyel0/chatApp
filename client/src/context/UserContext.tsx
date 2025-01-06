@@ -43,11 +43,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
     useEffect(()=>{
 
-        const allowedPaths = ["/", "/chat", "/profile"]
+        const UnallowedPaths = ["/login", "/signup"]
 
         const checkAuth = async ()=>{
 
-            if(allowedPaths.includes(location.pathname)){
+            if(UnallowedPaths.includes(location.pathname)){
+                return
+                
+            }else{
 
                 try{
 
