@@ -1,9 +1,10 @@
 import Navbar from "../components/Navbar"
 import Form from "../components/Form"
+import React from "react"
 
 
 
-export default function Login() {
+const Login: React.FC = () => {
   
 
   return (
@@ -12,4 +13,8 @@ export default function Login() {
     <Form type="login" />
     </>
   )
+  
 }
+
+
+export default Login

@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
 import axios, { AxiosResponse } from "axios"
+import { useNavigate } from "react-router-dom";
 
 type User = {
     id: string;
@@ -16,18 +17,25 @@ interface UserProviderProps{
     children: React.ReactNode
 }
 
+type userContextType = {
+    user: User | undefined;
+    logOut: ()=> void
+}
 
-const UserContext = createContext<User | undefined>(undefined)
 
-export const useUser = (): User | undefined=>{
+const UserContext = createContext<userContextType | undefined>(undefined)
+
+export const useUser = (): userContextType| undefined=>{
     return useContext(UserContext);
 }
+
 
 
 export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
     const [user, setUser] = useState<User | undefined>(undefined)
     const location = useLocation()
+    const navigate = useNavigate()
 
 
     
@@ -58,11 +66,27 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
         }
         checkAuth()
-    }, [])
+    }, [location.pathname])
+
+    const logOut = async () =>{
+
+        try{
+
+            setUser(undefined)
+            await axios.post("http://localhost:3939/logout", {}, {
+            withCredentials: true
+        })
+        navigate("/")
+
+        }catch(err: any){
+            console.log("could not log out", err)
+        }
+        
+    }
     
     
     return(
-        <UserContext.Provider value={user}>
+        <UserContext.Provider value={{user, logOut}}>
 
             {children}
 

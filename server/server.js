@@ -10,6 +10,10 @@ import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import bcrypt from 'bcrypt'
 import { authenticate } from "./authentication.js"
+import path from "path"
+
+
+const absolutePath = path.resolve()
 
 const app = express()
 const HOST = process.env.HOST
@@ -21,6 +25,7 @@ app.use(cors({
 }))
 app.use(express.json());
 app.use(cookieParser())
+app.use('/public', express.static(path.join(absolutePath, 'public')));
 
 connectMongo()
 
@@ -103,6 +108,18 @@ app.post('/login', async(req, res)=>{
     }catch(err){
         return res.status(500).json({message: "Error while Logging in ", error: err})
     }
+})
+
+app.post('/logout', (req, res)=>{
+
+    res.clearCookie("authToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: '/'
+    });
+
+    res.send({meesage: "logged out Successfully"})
 })
 
 
