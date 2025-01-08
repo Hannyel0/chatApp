@@ -47,13 +47,15 @@ export default function SideBar() {
 function ChatsList({type}: ChatsListProp){
 
     return(
-        <div className="p-4 mt-4 flex cursor-pointer">
-            <div className="w-12 h-12">
-                <img src={ProfileCard} alt="No profile" className="h-auto rounded-full border border-surface-a30 shadow-sm hover:scale-110 transition-all" />
-            </div>
-            <div className="ml-3">
-                <h5 className="font-semibold">{type === "chat" ? "Friend" : "The group"}</h5>
-                <p className="font-light text-gray-500">{type === "chat" ? "Last message goes here" : "Description goes here"}</p>
+        <div className="p-3 mt-4 ">
+            <div className="bg-surface-a20 p-2 flex cursor-pointer rounded-md">
+                <div className="w-12 h-12">
+                    <img src={ProfileCard} alt="No profile" className="h-auto rounded-full border border-surface-a30 shadow-sm hover:scale-110 transition-all" />
+                </div>
+                <div className="ml-3">
+                    <h5 className="font-semibold">{type === "chat" ? "Friend" : "The group"}</h5>
+                    <p className="font-light text-gray-500">{type === "chat" ? "Last message goes here" : "Description goes here"}</p>
+                </div>
             </div>
         </div>
     )
