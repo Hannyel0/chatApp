@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
-import axios, { AxiosResponse } from "axios"
+import axios, { Axios, AxiosResponse } from "axios"
 import { useNavigate } from "react-router-dom";
 
 type User = {
@@ -43,30 +43,52 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
     useEffect(()=>{
 
-        const UnallowedPaths = ["/login", "/signup"]
-
         const checkAuth = async ()=>{
 
-            if(UnallowedPaths.includes(location.pathname)){
-                return
-                
-            }else{
+            try{
 
-                try{
 
-                    const response: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth", {
-                        withCredentials: true
-                    })
+                const getCookie = async (): Promise<string | undefined> =>{
+
+
+                    try{
         
-                    setUser(response.data.user)
-    
-                }catch(err: any){
-    
-                    console.log("Not able to get the user Data")
-                    console.log({message: err.message})
-    
+                        const response: AxiosResponse<{message: string, cookie: string}> = await axios.get("http://localhost:3939/cookie", {
+                            withCredentials: true
+                        })
+                        return response.data.cookie
+        
+                    }catch(err){
+                        console.log("Something went wrong getting the cookie")
+                        return undefined
+                    }
+        
+                    
                 }
+
+                const token = await getCookie()
+
+                if(token){
+
+                        const response: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth", {
+                            withCredentials: true
+                        })
+            
+                        setUser(response.data.user)
+
+                    
+
+                }
+
+                
+    
+            }catch(err: any){
+    
+                console.log("Not able to get the user Data")
+                console.log({message: err.message})
+    
             }
+                
 
         }
         checkAuth()

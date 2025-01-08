@@ -138,6 +138,16 @@ app.get("/auth", authenticate, async(req, res)=>{
     res.status(200).json({user})
 })
 
+app.get("/cookie", async(req, res)=>{
+
+    const authCookie = req.cookies.authToken
+
+    if(authCookie){
+        res.send({message: "Auth cookie found", cookie: authCookie})
+    }else{
+        res.send({message: "cookie not available"})
+    }
+})
 
 
 
