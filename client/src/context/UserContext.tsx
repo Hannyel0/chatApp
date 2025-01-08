@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
-import axios, { AxiosResponse } from "axios"
+import axios, { Axios, AxiosError, AxiosResponse } from "axios"
 import { useNavigate } from "react-router-dom";
 
 type User = {
@@ -43,30 +43,35 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
     useEffect(()=>{
 
-        const UnallowedPaths = ["/login", "/signup"]
-
         const checkAuth = async ()=>{
 
-            if(UnallowedPaths.includes(location.pathname)){
-                return
-                
-            }else{
+            try{
 
-                try{
+                const response: AxiosResponse<{message: string, cookie: string}> = await axios.get("http://localhost:3939/cookie", {
+                    withCredentials: true
+                })
 
-                    const response: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth", {
+                const token = response.data.cookie
+
+                if(token){
+
+                    const userResponse: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth", {
                         withCredentials: true
                     })
-        
-                    setUser(response.data.user)
+            
+                    setUser(userResponse.data.user)
+
+                    
+
+                }       
     
-                }catch(err: any){
+            }catch(err: any){
     
-                    console.log("Not able to get the user Data")
-                    console.log({message: err.message})
+                console.log("Not able to get the user Data")
+                console.log({message: err.message})
     
-                }
             }
+                
 
         }
         checkAuth()
@@ -78,10 +83,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
         try{
 
             setUser(undefined)
-            await axios.post("http://localhost:3939/logout", {}, {
-            withCredentials: true
-        })
-        navigate("/")
+            await axios.post("http://localhost:3939/logout", {}, {withCredentials: true})
+            navigate("/")
+        
 
         }catch(err: any){
             console.log("could not log out",)
