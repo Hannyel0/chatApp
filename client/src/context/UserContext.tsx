@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
-import axios, { Axios, AxiosResponse } from "axios"
+import axios, { Axios, AxiosError, AxiosResponse } from "axios"
 import { useNavigate } from "react-router-dom";
 
 type User = {
@@ -47,40 +47,23 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
             try{
 
+                const response: AxiosResponse<{message: string, cookie: string}> = await axios.get("http://localhost:3939/cookie", {
+                    withCredentials: true
+                })
 
-                const getCookie = async (): Promise<string | undefined> =>{
-
-
-                    try{
-        
-                        const response: AxiosResponse<{message: string, cookie: string}> = await axios.get("http://localhost:3939/cookie", {
-                            withCredentials: true
-                        })
-                        return response.data.cookie
-        
-                    }catch(err){
-                        console.log("Something went wrong getting the cookie")
-                        return undefined
-                    }
-        
-                    
-                }
-
-                const token = await getCookie()
+                const token = response.data.cookie
 
                 if(token){
 
-                        const response: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth", {
-                            withCredentials: true
-                        })
+                    const userResponse: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth", {
+                        withCredentials: true
+                    })
             
-                        setUser(response.data.user)
+                    setUser(userResponse.data.user)
 
                     
 
-                }
-
-                
+                }       
     
             }catch(err: any){
     
@@ -100,10 +83,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
         try{
 
             setUser(undefined)
-            await axios.post("http://localhost:3939/logout", {}, {
-            withCredentials: true
-        })
-        navigate("/")
+            await axios.post("http://localhost:3939/logout", {}, {withCredentials: true})
+            navigate("/")
+        
 
         }catch(err: any){
             console.log("could not log out",)
