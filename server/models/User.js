@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     profilePicture: {
         type: String,
-        default: "/no-user-profile.png"
+        default: "server/public/no-user-profile.png"
     },
     bio: {
         type: String,
@@ -28,7 +28,10 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    conversations: [{
+        type: mongoose.Schema.Types.ObjectId, ref: "Conversation"
+    }]
 });
 
 userSchema.pre('save', async function (next) {
