@@ -61,7 +61,7 @@ export default function Form({ type }: FormProps) {
 
 
             if(type=== "login"){
-                navigate('/profile')
+                navigate('/chat')
             }
 
             if(type === "signUp"){
