@@ -14,10 +14,12 @@ export default function ConversationWindow() {
             </h3>
 
         </div>
-        <div className="flex-grow overflow-y-auto">
-            <h1>
-                Messages here
-            </h1>
+        <div className="flex flex-col flex-grow justify-end overflow-y-auto p-5">
+            <div className="flex justify-end">
+                <div className="flex justify-end bg-surface-a20 rounded-lg max-w-[50%] p-5">
+                    <p className="">Here would go all the messages</p>
+                </div>
+            </div>
         </div>
         <div className="flex justify-center  ">
             <form className="p-4 flex items-center justify-between w-[90%] bg-surface-a20 rounded-md">
