@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Nopfp from "../assets/no-user-profile.png"
+import { IoMdAdd } from "react-icons/io";
 
 
 type ChatsListProp ={
@@ -28,6 +29,7 @@ export default function SideBar() {
     <aside className="h-[calc(100vh-68px)] w-full max-w-[16%] min-w-[255px] bg-surface-a10 rounded-md overflow-y-auto transition-all ">
 
         <div className="border-b border-[#434343]">
+            
             <ul className="flex justify-evenly items-center">
                 <li onClick={()=>setActiveTab(0)} className={`cursor-pointer p-3 font-semibold ${activeTab === 0 ? "text-primary-a10 font-bold" : "text-white font-semibold"}`}>
                     Chats
@@ -36,6 +38,11 @@ export default function SideBar() {
                     Groups
                 </li>
             </ul>
+            
+            
+        </div>
+        <div className="w-full flex justify-center mt-3">
+        <button className="w-[90%] flex justify-center p-2 rounded-md bg-primary-a20 hover:bg-primary-a30"><IoMdAdd className="font-bold text-xl" /></button>
         </div>
 
         {renderTab()}
