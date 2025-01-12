@@ -47,7 +47,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
             try{
 
-                const response: AxiosResponse<{message: string, cookie: string}> = await axios.get("http://localhost:3939/cookie", {
+                const response: AxiosResponse<{message: string, cookie: string}> = await axios.get("http://localhost:3939/auth/cookie", {
                     withCredentials: true
                 })
 
@@ -55,7 +55,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
 
                 if(token){
 
-                    const userResponse: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth", {
+                    const userResponse: AxiosResponse<{user: User}> = await axios.get("http://localhost:3939/auth/auth", {
                         withCredentials: true
                     })
             
@@ -83,7 +83,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({children})=>{
         try{
 
             setUser(undefined)
-            await axios.post("http://localhost:3939/logout", {}, {withCredentials: true})
+            await axios.post("http://localhost:3939/auth/logout", {}, {withCredentials: true})
             navigate("/")
         
 

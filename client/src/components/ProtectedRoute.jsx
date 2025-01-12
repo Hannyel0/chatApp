@@ -18,7 +18,7 @@ export default function ProtectedRoute({children}) {
 
             try{
                 
-                await axios.get("http://localhost:3939/auth", {
+                await axios.get("http://localhost:3939/auth/auth", {
                     withCredentials: true,
                 })
     

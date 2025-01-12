@@ -53,7 +53,7 @@ export default function Form({ type }: FormProps) {
 
         try{
 
-            const url = type === "login" ? "http://localhost:3939/login" : "http://localhost:3939/signup"
+            const url = type === "login" ? "http://localhost:3939/auth/login" : "http://localhost:3939/auth/signup"
 
             await axios.post(url, formData, {
                 withCredentials: true
