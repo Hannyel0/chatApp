@@ -1,15 +1,23 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Nopfp from "../assets/no-user-profile.png"
 import { IoMdAdd } from "react-icons/io";
+import { FaSearch } from "react-icons/fa";
 
 
 type ChatsListProp ={
     type: "chat" | "group"
 }
 
+type ModalProps = {
+    
+    buttonRef: React.RefObject<HTMLButtonElement>, 
+}
+
 export default function SideBar() {
 
     const [activeTab, setActiveTab] = useState<number>(0)
+    const [modalWindow, setModalWindow] = useState<boolean>(false)
+    const buttonRef = useRef<HTMLButtonElement |  null>(null)
 
 
     const renderTab = ()=>{
@@ -26,7 +34,7 @@ export default function SideBar() {
 
   return (
 
-    <aside className="h-[calc(100vh-68px)] w-full max-w-[16%] min-w-[255px] bg-surface-a10 rounded-md overflow-y-auto transition-all ">
+    <aside className="h-[calc(100vh-68px)] w-full max-w-[16%] min-w-[255px] bg-surface-a10 rounded-md overflow-y-auto transition-all">
 
         <div className="border-b border-[#434343]">
             
@@ -41,13 +49,43 @@ export default function SideBar() {
             
             
         </div>
-        <div className="w-full flex justify-center mt-3">
-        <button className="w-[90%] flex justify-center p-2 rounded-md bg-primary-a20 hover:bg-primary-a30"><IoMdAdd className="font-bold text-xl" /></button>
+
+        <div className="w-full flex justify-center mt-3 ">
+
+        <button ref={buttonRef} onClick={()=> setModalWindow(!modalWindow)} className="w-[90%] flex justify-center p-2 rounded-md bg-primary-a20 hover:bg-primary-a30"><IoMdAdd className="font-bold text-xl" /></button>
+
         </div>
 
+        {modalWindow && (
+            <Modal buttonRef={buttonRef}/>
+        )}
+
         {renderTab()}
+
+
+        
     </aside>
   )
+}
+
+function Modal({buttonRef}: ModalProps){
+
+    const buttonRect = buttonRef.current?.getBoundingClientRect();
+
+
+    return(
+        <div className="absolute bg-surface-a0 p-4 rounded-md shadow-md z-50 overflow-y-auto" style={{
+            top: buttonRect ? buttonRect.top + -35 : 0, // Position below the button
+            left: buttonRect ? buttonRect.left  + 300: 0, // Align with button's left side
+          }}>
+             <form className="bg-surface-a10 p-2 rounded-md flex items-center ">
+                <input type="text" placeholder="LookUp users" className="bg-transparent outline-none" />
+                <FaSearch className="ml-2 cursor-pointer"/>
+             </form>
+          </div>
+    )
+
+
 }
 
 

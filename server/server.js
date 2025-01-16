@@ -6,7 +6,8 @@ import cors from 'cors'
 import { connectMongo } from './dbconnection.js';
 import cookieParser from 'cookie-parser';
 import path from "path"
-import router from "./routes/authRoutes.js"
+import authRouter from "./routes/authRoutes.js"
+import messagingRouter from "./routes/messaging.js"
 
 
 const absolutePath = path.resolve()
@@ -26,7 +27,8 @@ app.use('/public', express.static(path.join(absolutePath, 'public')));
 connectMongo()
 
 
-app.use('/auth', router)
+app.use('/auth', authRouter)
+app.use("/messaging", messagingRouter)
 
 
 app.listen(PORT, HOST, ()=>{
