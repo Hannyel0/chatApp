@@ -5,11 +5,11 @@ import bcrypt from 'bcrypt'
 import { authenticate } from "../authentication.js"
 import express from "express"
 
-const router = express.Router()
+const authRouter = express.Router()
 
 
 
-router.post('/signup', async(req, res)=>{
+authRouter.post('/signup', async(req, res)=>{
 
     const {username, email, password, confirmPassword} = req.body
 
@@ -53,7 +53,7 @@ router.post('/signup', async(req, res)=>{
 
 
 
-router.post('/login', async(req, res)=>{
+authRouter.post('/login', async(req, res)=>{
 
     const {email, password} = req.body 
 
@@ -87,7 +87,7 @@ router.post('/login', async(req, res)=>{
     }
 })
 
-router.post('/logout', (req, res)=>{
+authRouter.post('/logout', (req, res)=>{
 
     res.clearCookie("authToken", {
         httpOnly: true,
@@ -104,7 +104,7 @@ router.post('/logout', (req, res)=>{
 
 
 
-router.get("/auth", authenticate, async(req, res)=>{
+authRouter.get("/auth", authenticate, async(req, res)=>{
 
     const user = await User.findById(req.user.userId)
 
@@ -116,7 +116,7 @@ router.get("/auth", authenticate, async(req, res)=>{
 })
 
 
-router.get("/cookie", async(req, res)=>{
+authRouter.get("/cookie", async(req, res)=>{
 
     const authCookie = req.cookies.authToken
 
@@ -127,4 +127,4 @@ router.get("/cookie", async(req, res)=>{
     }
 })
 
-export default router
+export default authRouter
