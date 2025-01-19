@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import plugin from "tailwindcss/plugin"
 export default {
   content: [
     './src/**/*.{html,js,jsx,ts,tsx}', // This will include all files in src, including components and pages
@@ -24,6 +25,25 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-thumb-rounded': {
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '9999px', // Fully rounded
+          },
+        },
+        '.scrollbar-track-rounded': {
+          '&::-webkit-scrollbar-track': {
+            borderRadius: '9999px', // Fully rounded track
+          },
+        },
+      });
+    }),
+  ],
+  variants:{
+    scrollbar: ["rounded"]
+  }
 }
 

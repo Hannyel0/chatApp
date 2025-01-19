@@ -18,17 +18,19 @@ const messagingRouter = express.Router()
 
 
 
-messagingRouter.get("/users/search", async (req, res)=>{
+messagingRouter.post("/userSearch", async (req, res)=>{
 
-    const {query} = req.query
+    console.log(req.body.query)
+
+    const query = req.body.query
 
 
     const users = await User.find({name: {$regex: query, $options: "i"}})
 
-    if(user){
+    if(users){
         res.status(200).json({message: "Users request successful", users: users})
     }else{
-        res.status(404).json({message: "User not found"})
+        res.status(404).json({message: "User not found in the and it is not actual  "})
     }
 })
 

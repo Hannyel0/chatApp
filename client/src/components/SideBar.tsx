@@ -2,6 +2,7 @@ import { useRef, useState } from "react"
 import Nopfp from "../assets/no-user-profile.png"
 import { IoMdAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
+import axios from "axios";
 
 
 type ChatsListProp ={
@@ -11,6 +12,17 @@ type ChatsListProp ={
 type ModalProps = {
     
     buttonRef: React.RefObject<HTMLButtonElement>, 
+}
+
+type User = {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    profilePicture: string;
+    conversations: Array<string>;
+    createdAt: string;
+    __v: number
 }
 
 export default function SideBar() {
@@ -70,19 +82,58 @@ export default function SideBar() {
 
 function Modal({buttonRef}: ModalProps){
 
+    const [users, setUsers] = useState<Array<User>| null>(null)
+    const lookInput = useRef<HTMLInputElement | null>(null)
+
     const buttonRect = buttonRef.current?.getBoundingClientRect();
 
 
+    const handleLookUp = async()=>{
+
+        try{
+
+            const response = await axios.post("http://localhost:3939/messaging/userSearch", {query: lookInput.current?.value })
+
+            setUsers(response.data.users)
+
+        }catch(err){
+
+            console.log("something went wrong with the request", err)
+
+        }
+
+    }
+
+
     return(
-        <div className="absolute bg-surface-a0 p-4 rounded-md shadow-md z-50 overflow-y-auto" style={{
+        <div className="absolute bg-surface-a0  p-4 rounded-md shadow-md max-w-[20vw] max-h-[35vh] z-50 overflow-y-auto  scrollbar-thin scrollbar-thumb-primary-a0
+        scrollbar-track-surface-a20 scrollbar-thumb-rounded scrollbar-track-rounded" style={{
             top: buttonRect ? buttonRect.top + -35 : 0, // Position below the button
-            left: buttonRect ? buttonRect.left  + 300: 0, // Align with button's left side
+            left: buttonRect ? buttonRect.left  + 320: 0, // Align with button's left side
           }}>
-             <form className="bg-surface-a10 p-2 rounded-md flex items-center ">
-                <input type="text" placeholder="LookUp users" className="bg-transparent outline-none" />
-                <FaSearch className="ml-2 cursor-pointer"/>
+             <form className=" bg-surface-a10 p-2 rounded-md flex justify-between items-center mb-4">
+                <input ref={lookInput} type="text" placeholder="LookUp users" className="bg-transparent outline-none" />
+                <FaSearch className="ml-2 cursor-pointer" onClick={handleLookUp}/>
              </form>
-          </div>
+             <div>
+               {users?.map((user, i)=>(
+
+                <div key={i}  className="bg-surface-a10 p-3 cursor-pointer flex items-center rounded-lg mb-3">
+                <div className="h-10 w-10 ">
+                    <img src={Nopfp}  className="rounded-full"/>
+                </div>
+                <div className="ml-5"> 
+                    <h5 className="font-semibold text-md">{user.name}</h5>
+                    <p className="font-light text-gray-500 text-sm">Bio user</p>
+
+                </div>
+            </div>
+
+               ))}
+                    
+                
+             </div>
+        </div>
     )
 
 
