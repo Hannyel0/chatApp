@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import path from "path"
 import authRouter from "./routes/authRoutes.js"
 import messagingRouter from "./routes/messaging.js"
+import usersRouter from "./routes/usersRoutes.js"
 
 
 const absolutePath = path.resolve()
@@ -29,6 +30,7 @@ connectMongo()
 
 app.use('/auth', authRouter)
 app.use("/messaging", messagingRouter)
+app.use("/users", usersRouter)
 
 
 app.listen(PORT, HOST, ()=>{
