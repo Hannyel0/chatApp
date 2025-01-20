@@ -93,7 +93,7 @@ function Modal({onClose}: ModalProps){
 
         try{
 
-            const response = await axios.post("http://localhost:3939/messaging/userSearch", {query: lookInput.current?.value })
+            const response = await axios.post("http://localhost:3939/users/addUserSearch", {query: lookInput.current?.value })
 
             setUsers(response.data.users)
 
