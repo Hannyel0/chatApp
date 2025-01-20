@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import Nopfp from "../assets/no-user-profile.png"
 import { IoMdAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
@@ -10,8 +10,8 @@ type ChatsListProp ={
 }
 
 type ModalProps = {
-    
-    buttonRef: React.RefObject<HTMLButtonElement>, 
+
+    onClose: ()=> void
 }
 
 type User = {
@@ -69,7 +69,7 @@ export default function SideBar() {
         </div>
 
         {modalWindow && (
-            <Modal buttonRef={buttonRef}/>
+            <Modal onClose={()=> setModalWindow(false)}/>
         )}
 
         {renderTab()}
@@ -80,15 +80,16 @@ export default function SideBar() {
   )
 }
 
-function Modal({buttonRef}: ModalProps){
+function Modal({onClose}: ModalProps){
 
     const [users, setUsers] = useState<Array<User>| null>(null)
     const lookInput = useRef<HTMLInputElement | null>(null)
 
-    const buttonRect = buttonRef.current?.getBoundingClientRect();
 
 
-    const handleLookUp = async()=>{
+    const handleLookUp = async(e: React.FormEvent)=>{
+
+        e.preventDefault()
 
         try{
 
@@ -104,16 +105,23 @@ function Modal({buttonRef}: ModalProps){
 
     }
 
+    const handleModalClick = (e: React.MouseEvent<HTMLDivElement>)=>{
+
+
+        if(e.target === e.currentTarget){
+            onClose()
+        }
+    }
+
 
     return(
-        <div className="absolute bg-surface-a0  p-4 rounded-md shadow-md max-w-[20vw] max-h-[35vh] z-50 overflow-y-auto  scrollbar-thin scrollbar-thumb-primary-a0
-        scrollbar-track-surface-a20 scrollbar-thumb-rounded scrollbar-track-rounded" style={{
-            top: buttonRect ? buttonRect.top + -35 : 0, // Position below the button
-            left: buttonRect ? buttonRect.left  + 320: 0, // Align with button's left side
-          }}>
-             <form className=" bg-surface-a10 p-2 rounded-md flex justify-between items-center mb-4">
-                <input ref={lookInput} type="text" placeholder="LookUp users" className="bg-transparent outline-none" />
-                <FaSearch className="ml-2 cursor-pointer" onClick={handleLookUp}/>
+        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center" onClick={handleModalClick}>
+
+            <div className=" bg-surface-a0 p-5 rounded-md md:max-w-[75%] sm:max-w-[30%] h-[50%] z-50 overflow-y-auto  scrollbar-thin scrollbar-thumb-primary-a0
+        scrollbar-track-surface-a20">
+             <form className=" bg-surface-a10 p-2 rounded-md flex justify-between items-center mb-4" onSubmit={handleLookUp}>
+                <input ref={lookInput} type="text" placeholder="LookUp users" className=" bg-transparent flex-grow outline-none" />
+                <FaSearch className="ml-2  text-lg cursor-pointer" />
              </form>
              <div>
                {users?.map((user, i)=>(
@@ -134,6 +142,9 @@ function Modal({buttonRef}: ModalProps){
                 
              </div>
         </div>
+
+        </div>
+        
     )
 
 
