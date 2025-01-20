@@ -15,7 +15,7 @@ type ModalProps = {
 }
 
 type User = {
-    id: string;
+    _id: string;
     name: string;
     email: string;
     password: string;
@@ -124,9 +124,9 @@ function Modal({onClose}: ModalProps){
                 <FaSearch className="ml-2  text-lg cursor-pointer" />
              </form>
              <div>
-               {users?.map((user, i)=>(
+               {users?.map((user)=>(
 
-                <div key={i}  className="bg-surface-a10 p-3 cursor-pointer flex items-center rounded-lg mb-3">
+                <div key={user._id}  className="bg-surface-a10 p-3 cursor-pointer flex items-center rounded-lg mb-3">
                 <div className="h-10 w-10 ">
                     <img src={Nopfp}  className="rounded-full"/>
                 </div>
